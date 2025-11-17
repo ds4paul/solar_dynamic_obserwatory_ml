@@ -22,6 +22,11 @@ Original archive: **NLFFF Dataset and Flare Label Database Archive**
 The working data, exported from SQLite to `.csv` format, is available at:  
 https://drive.google.com/drive/folders/1JJhNI2VePSgYyD1sM7Lv63ajUMJ-iElY?usp=sharing
 
+ - `flare_info.csv` https://drive.google.com/file/d/1LU4Js4fyA0Hl1fmAKjH7rSDzpfxD90r1/view?usp=share_link
+ - `nlfff_archive.csv` https://drive.google.com/file/d/1Y8oVZ9SM0S6JAKCBOsmFRjlJAN3F8yvg/view?usp=share_link
+ - `nlfff_flare_label.csv` https://drive.google.com/file/d/1MRRVrNkP0UIONW9aGk1LUoeN2OcxlCKG/view?usp=share_link
+ - `nlfff_raw.csv` https://drive.google.com/file/d/19uYRjL3k-hy6aIV4g4QsHVcwyvcDyx0-/view?usp=share_link
+
 ---
 
 ## 2. Dataset Overview and File Structure

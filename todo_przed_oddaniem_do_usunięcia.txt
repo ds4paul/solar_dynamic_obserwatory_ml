@@ -1,0 +1,20 @@
+Etap I — Dane & EDA
+✔ pobranie i zapis danych
+✔ analiza dat i zakresów
+✔ merge danych
+✔ identyfikacja braków & outlierów
+✔ redukcja kolumn
+Etap II — Preprocessing & FE
+✔ scaling
+✔ encoding target
+✔ optional PCA
+✔ isolation forest for outliers
+Etap III — Modeling
+✔ baseline model
+✔ ML models (binary, multiclass, regression)
+✔ tuning via Optuna
+Etap IV — Interpretation
+✔ SHAP
+✔ PDP
+✔ ranking featureów
+Etap V — Final report & conclusions
