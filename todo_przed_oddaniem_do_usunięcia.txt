@@ -18,3 +18,11 @@ Etap IV — Interpretation
 ✔ PDP
 ✔ ranking featureów
 Etap V — Final report & conclusions
+
+
+
+moje środowisko ml_env:
+python 3.12.8
+pandas
+numpy
+conda install -c conda-forge gdown
