@@ -1,175 +1,184 @@
 # Data Description (NLFFF Dataset – Solar Active Regions + Flare Labels)
 
-## Oficjalne źródła danych
+## Official Data Sources
+
 https://nlfff.dataset.deepsolar.space/en/download/  
 https://sdo.gsfc.nasa.gov  
 https://www.swpc.noaa.gov/products/goes-x-ray-flux  
 
-
 ---
 
-## 0. Zbiór pobrany ze strony
+## 0. Dataset Download Source
 
-Źródło:  
+Source:  
 https://nlfff.dataset.deepsolar.space/en/download/#3-database-archive-files  
 
-Plik źródłowy: **NLFFF Dataset and Flare Label Database Archive**
-
+Original archive: **NLFFF Dataset and Flare Label Database Archive**
 
 ---
 
-## 1. Dane eksportowane z SQL do CSV
+## 1. SQL Data Exported to CSV
 
-Dane robocze zapisane w formacie `.csv` dostępne są pod adresem:  
+The working data, exported from SQLite to `.csv` format, is available at:  
 https://drive.google.com/drive/folders/1JJhNI2VePSgYyD1sM7Lv63ajUMJ-iElY?usp=sharing
 
+---
+
+## 2. Dataset Overview and File Structure
+
+### 2.1 Contents of Individual Files
+
+#### 1.1 `flare_info.csv`
+
+Contains information on solar flares observed by **NOAA/GOES** satellites.  
+This file represents the **outcome** (observational effect) dataset.  
+It includes:  
+- flare classes: **A, B, C, M, X**  
+- start time  
+- peak time  
+- end time  
+- peak X-ray radiation intensity (peak flux)
+
+This file **remains in the project**, but is used **only** for:  
+- validation  
+- qualitative interpretation  
+- sanity-check  
+- *not* as ML model input features  
 
 ---
 
-## 2. Dataset — informacje i struktura
+#### 1.2 `nlfff_flare_label.csv`
 
-### 2.1 Zawartość poszczególnych plików
+Contains flare labels time-aligned with **HARP/SHARP** observations from NASA SDO  
+for multiple forecast windows, e.g.:
 
-#### 1.1 flare_info.csv
-Zawiera informacje o rozbłyskach słonecznych według obserwacji satelitów **NOAA/GOES**.  
-Jest to zbiór opisujący **skutek** (wynik obserwacyjny).  
-Dane zawierają m.in.:  
-- klasy flar: **A, B, C, M, X**,  
-- czas rozpoczęcia,  
-- czas maksimum,  
-- czas zakończenia,  
-- wartość szczytowego natężenia promieniowania rentgenowskiego (**peak flux**).  
+`now_flare_level, h6_flare_level, h12_flare_level, h24_flare_level, h48_flare_level`
 
-Plik **pozostaje** w projekcie, ale jest wykorzystywany **wyłącznie** do:  
-- walidacji,  
-- interpretacji jakościowej,  
-- sanity-check,  
-- *nie* jako wejście do modelu ML.
+Labels are based on:  
+- flare strength  
+- flare occurrence time  
 
-
-#### 1.2 nlfff_flare_label.csv
-Zawiera etykiety flar powiązane czasowo z obserwacjami **HARP/SHARP** z NASA SDO  
-dla różnych horyzontów prognozy, np.:  
-`now_flare_level, h6_flare_level, h12_flare_level, h24_flare_level, h48_flare_level`.
-
-Oznaczenia oparte są na:  
-- sile rozbłysku,  
-- czasie jego wystąpienia.
-
-Plik pozostaje w projekcie i stanowi **podstawę do tworzenia zmiennej celu (target y).**
-
-
-#### 1.3 nlfff_raw.csv
-Zawiera rzeczywiste **fizyczne parametry magnetyczne aktywnych regionów Słońca** (*SHARP features*)  
-pochodzące z instrumentu **HMI** satelity **SDO**.
-
-Jest to **główne źródło cech wejściowych (features X)**.
-
-Plik pozostaje w projekcie **po selekcji zmiennych**, pozostają tylko cechy fizyczne istotne  
-dla modelowania, natomiast wszystkie pola:  
-- techniczne,  
-- opisowe,  
-- plikowe,  
-- geometryczne,  
-- jakościowe  
-są **usuwane**.
-
-
-#### 1.4 nlfff_archive.csv
-Zawiera dane archiwalne, metadane, pola pośrednie oraz dane duplikujące zawartość `nlfff_raw.csv`.  
-Ten plik **jest usuwany** z projektu i nie powinien być używany na żadnym etapie modelowania ML,  
-ponieważ może prowadzić do:  
-- **data leakage**,  
-- **błędnych korelacji**.
-
+This file remains in the project and forms the **core target variable (y)**  
+for machine learning models.
 
 ---
 
-## 3. Co usuwamy i dlaczego
+#### 1.3 `nlfff_raw.csv`
 
-Usuwamy wszystkie pola o charakterze:  
-- technicznym,  
-- plikowym,  
-- geometrycznym,  
-- statystycznym,  
-- jakościowym,  
-- metadokumentacyjnym,  
+Contains **physical magnetic field parameters** of solar active regions (*SHARP features*)  
+retrieved from the **HMI instrument** on the **SDO satellite**.
 
-ponieważ **nie mają fizycznego znaczenia w predykcji flar**.
+This file serves as the **main source of input features (X)**.
 
-Odrzucamy m.in.:  
-`FILE_NAME, CONTENT, ORIGIN, CTYPE*, CRPIX*, CRVAL*, CDELT*, CROTA2, QUALITY, QUAL_S, QUALLEV*, ścieżki do FITS, BUNIT*, DATA*, MISSVAL*, DATAMIN*, DATAMAX*, DATAMEAN*, DATARMS*, komentarze, pola wersji pipeline, pola dokumentacyjne.`
-
-Pola czasowe, np. `T_REC`, oraz identyfikator aktywnego regionu `HARP_NUM`,  
-pozostawiamy **wyłącznie w celu łączenia tabel**,  
-jednak **nie są** one cechami modelowymi (features).
-
+It remains in the project **after feature selection** — only physically meaningful,  
+magnetically relevant parameters are retained, while all fields that are:  
+- technical  
+- descriptive  
+- file-related  
+- geometric  
+- quality-related  
+are **removed**.
 
 ---
 
-## 4. Zestaw plików i ich ostateczna rola
+#### 1.4 `nlfff_archive.csv`
 
-| Plik | Rola w projekcie |
-|------|------------------|
-| **nlfff_raw.csv** | Główne cechy wejściowe (features X) |
-| **nlfff_flare_label.csv** | Zmienne celu (targets y) |
-| **flare_info.csv** | Walidacja i analiza pomocnicza (nie features) |
-| **nlfff_archive.csv** | Usuwamy / archiwizujemy (ryzyko leakage) |
+Contains archival records, metadata, intermediate values, and duplicated data  
+overlapping with `nlfff_raw.csv`.  
 
+This file **is removed** from the project and must **not** be used at any stage  
+of ML modeling due to risk of:  
+- **data leakage**  
+- **false correlations**
 
 ---
 
-## 5. Zasady łączenia tabel
+## 3. Removed Fields and Justification
 
-- Łączenie wykonujemy poprzez **klucz złożony**:  
+The following types of fields are removed:  
+- technical  
+- file-related  
+- geometric  
+- statistical  
+- qualitative  
+- metadata  
+
+because they **do not carry physical predictive value** for flare forecasting.
+
+Examples of excluded fields:  
+`FILE_NAME, CONTENT, ORIGIN, CTYPE*, CRPIX*, CRVAL*, CDELT*, CROTA2, QUALITY, QUAL_S, QUALLEV*, FITS paths, BUNIT*, DATA*, MISSVAL*, DATAMIN*, DATAMAX*, DATAMEAN*, DATARMS*, comments, pipeline version fields, documentation-related fields.`
+
+Time-based fields such as `T_REC`, and identifiers such as `HARP_NUM`,  
+are kept **only for merging tables**,  
+but **not** included as ML features.
+
+---
+
+## 4. Final File Usage Summary
+
+| File | Project Role |
+|------|--------------|
+| **nlfff_raw.csv** | Main input features (X) |
+| **nlfff_flare_label.csv** | Target variables (y) |
+| **flare_info.csv** | Validation and auxiliary analysis (not features) |
+| **nlfff_archive.csv** | Removed / archived (leakage risk) |
+
+---
+
+## 5. Table Joining Rules
+
+- Tables are joined using a **composite key**:  
   **`HARP_NUM` + `T_REC`**
-- Dane wejściowe (X) muszą pochodzić **z czasu wcześniejszego niż target (y)**.
-- Niedopuszczalne jest użycie zmiennych **pochodzących po wystąpieniu flary**  
-  jako cech wejściowych (ryzyko **data leakage**).
 
+- Input features (X) must originate **before** the target (y) timestamp.
+
+- It is strictly forbidden to use any variable **created after the flare event**  
+  as an input feature, due to **data leakage risk**.
 
 ---
 
-## 6. Finalny logiczny pipeline danych
+## 6. Final Logical Dataset Pipeline
 
-nlfff_raw.csv → selekcja fizycznych cech → preprocessing & scaling
-nlfff_flare_label.csv → wybór targetu + opcjonalny encoding
-opcjonalnie flare_info.csv → walidacja i analiza wyników
-X + y → modele ML (klasyfikacja, regresja, ordinal classification, multi-horizon forecasting)
+- `nlfff_raw.csv` → physical feature selection → preprocessing & scaling  
+- `nlfff_flare_label.csv` → target extraction + optional encoding  
+- optional `flare_info.csv` → validation and result interpretation  
+- `X + y` → ML models (classification, regression, ordinal classification, multi-horizon forecasting)
 
 ---
 
 ## 7. Full Variable Meaning Reference (Data Dictionary)
 
-### 7.1 Zmienne kluczowe (nie są cechami modelowymi)
+### 7.1 Key Variables (Not Used as Features)
 
-- **HARP_NUM** – numeryczny identyfikator aktywnego regionu Słońca (SHARP/HARP)  
-- **T_REC** – timestamp obserwacji w formacie TAI (czas rekordu)
+- **HARP_NUM** – numerical identifier of the solar active region (SHARP/HARP)  
+- **T_REC** – observation timestamp in TAI time format  
 
+---
 
-### 7.2 Fizyczne parametry magnetyczne używane jako cechy wejściowe (features X)
+### 7.2 Physical Magnetic Parameters Used as Input Features (X)
 
-`USFLUX` – całkowity bezwzględny strumień magnetyczny  
-`MEANGAM` – średni kąt nachylenia pola magnetycznego  
-`MEANGBT` – średni gradient modułu całkowitego pola magnetycznego  
-`MEANGBZ` – średni pionowy gradient składowej pola magnetycznego Bz  
-`MEANGBH` – średni gradient poziomej składowej pola magnetycznego  
-`MEANJZD` – średnia gęstość pionowego prądu elektrycznego  
-`TOTUSJZ` – całkowity bezwzględny pionowy prąd elektryczny  
-`MEANALP` – średnia wartość parametru alfa (twist)  
-`MEANJZH` – średnia helicity prądowej  
-`TOTUSJH` – całkowita helicity prądowa (unsigned)  
-`ABSNJZH` – znormalizowana helicity prądowa  
-`SAVNCPP` – suma bezwzględnych wartości prądów netto  
-`MEANPOT` – średnia gęstość wolnej energii pola magnetycznego  
-`TOTPOT` – całkowita wolna energia pola magnetycznego  
-`MEANSHR` – średni kąt ścinania pola  
-`SHRGT45` – odsetek pikseli o kącie ścinania > 45°  
-`R_VALUE` – wskaźnik Schrijvera linii neutralnej pola (PIL)  
-`GWILL` – alternatywny wskaźnik gradientowy pola magnetycznego  
+`USFLUX` – total unsigned magnetic flux  
+`MEANGAM` – mean magnetic field inclination angle  
+`MEANGBT` – mean gradient of total magnetic field  
+`MEANGBZ` – mean vertical gradient of Bz magnetic field component  
+`MEANGBH` – mean gradient of horizontal magnetic field component  
+`MEANJZD` – mean vertical electric current density  
+`TOTUSJZ` – total unsigned vertical electric current  
+`MEANALP` – mean alpha parameter (magnetic twist)  
+`MEANJZH` – mean current helicity  
+`TOTUSJH` – total unsigned current helicity  
+`ABSNJZH` – normalized helicity parameter  
+`SAVNCPP` – sum of net current per polarity  
+`MEANPOT` – mean free magnetic energy density  
+`TOTPOT` – total free magnetic energy  
+`MEANSHR` – mean shear angle between observed and potential field  
+`SHRGT45` – percentage of pixels where shear angle > 45°  
+`R_VALUE` – Schrijver coronal neutral line activity index (PIL)  
+`GWILL` – alternative magnetic gradient index  
 
+---
 
-### 7.3 Zmienne etykiet w nlfff_flare_label.csv (targets y)
+### 7.3 Target Variables in `nlfff_flare_label.csv`
 
 - `now_flare_level`
 - `h6_flare_level`
@@ -177,38 +186,41 @@ X + y → modele ML (klasyfikacja, regresja, ordinal classification, multi-horiz
 - `h24_flare_level`
 - `h48_flare_level`
 
-Interpretacja klas:  
-`0 = brak flary`  
+Class interpretation:  
+`0 = no flare`  
 `1 = B`  
 `2 = C`  
 `3 = M`  
 `4 = X`  
 
+---
 
-### 7.4 Zmienne pomocnicze w flare_info.csv (walidacja, nie features)
+### 7.4 Auxiliary Variables in `flare_info.csv` (Validation Only)
 
-`start_time` – czas rozpoczęcia flary  
-`peak_time` – czas szczytowy  
-`end_time` – czas zakończenia  
-`peak_flux` – wartość szczytowa X-ray  
-`class` – oficjalna klasa flary (A, B, C, M, X)  
-`noaa_region` – identyfikator regionu NOAA powiązanego z flarą  
-
+`start_time` – flare start timestamp  
+`peak_time` – peak time  
+`end_time` – end timestamp  
+`peak_flux` – peak X-ray intensity  
+`class` – official NOAA flare class (A, B, C, M, X)  
+`noaa_region` – NOAA active region identifier  
 
 ---
 
-## 8. Ostateczna decyzja dotycząca cech modelowych
+## 8. Final Feature Selection Decision
 
-Zachowujemy wyłącznie fizyczne cechy magnetyczne z `nlfff_raw.csv` jako wejście (X)  
-oraz etykiety z `nlfff_flare_label.csv` jako wyjście (y).  
+Only **physical magnetic features** from `nlfff_raw.csv` are kept as input (X),  
+and only **flare horizon labels** from `nlfff_flare_label.csv` are used as targets (y).  
 
-Dane czasowe oraz klucz identyfikacyjny pełnią funkcję **łączącą**,  
-natomiast wszystkie cechy:  
-- techniczne,  
-- obrazowe,  
-- opisowe,  
-- geometryczne,  
-- metadane,  
-- cały plik `nlfff_archive.csv`  
+Time variables and unique identifiers are used **solely for joining** tables,  
+while all other variables including:  
 
-są usuwane ze względu na **brak wartości predykcyjnej** oraz **ryzyko data leakage**.
+- technical  
+- imaging  
+- descriptive  
+- geometric  
+- metadata  
+- full `nlfff_archive.csv`  
+
+are removed due to **lack of predictive value**  
+and **high data leakage risk**.
+
