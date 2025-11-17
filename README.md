@@ -51,3 +51,10 @@ project/
 └── docs/
     ├── data_description.md
     └── model_notes.md
+
+### Note on large data files !!!
+
+The downloaded raw dataset files are very large (some exceed 100 MB).  
+Do **not** commit them to GitHub at this stage.  
+They will be added only after preprocessing and removing unnecessary columns  
+to keep the repository lightweight and compatible with GitHub’s file size limits.

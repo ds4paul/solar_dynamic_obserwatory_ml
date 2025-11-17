@@ -51,3 +51,11 @@ project/
 └── docs/
     ├── data_description.md
     └── model_notes.md
+
+### Uwaga dotycząca dużych plików danych !!!
+
+Pobrane surowe pliki datasetu są bardzo duże (niektóre przekraczają 100 MB).  
+Na tym etapie **nie należy** dodawać ich do GitHuba (commit/push).  
+Zostaną uwzględnione dopiero po przeprowadzeniu preprocessingu  
+i usunięciu zbędnych kolumn, aby repozytorium pozostało lekkie  
+oraz zgodne z ograniczeniami rozmiaru plików narzucanymi przez GitHub.
