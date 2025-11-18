@@ -90,12 +90,38 @@ print(f"[OK] Final merged dataset shape (X + y + GOES): {df_final.shape}")
 match_rate = df_final["peak_datetime"].notna().mean() * 100
 print(f"[INFO] GOES timestamp match rate: {match_rate:.2f}%")
 
-
 # 4 SAVE TEMPORARY MERGED OUTPUT
-
 
 OUT_PATH = INTERIM_DIR / "merged_xy_goes_test.csv"
 df_final.to_csv(OUT_PATH, index=False)
 
 print(f"\n[SAVED] Test merged dataset saved to:\n{OUT_PATH}")
 print("[NOTE] This output is TEMPORARY — final dataset will be validated and cleaned later.")
+
+# NEXT STEP: TEMPORAL VALIDATION (to be done in next script)
+
+# This merge test only verifies that:
+#   - Key columns can be aligned
+#   - Datetime formats are consistent
+#   - Basic tolerance-based timestamp matching works
+
+# However, this script does NOT yet confirm:
+#   * temporal causality  (feature_time < flare_time)
+#   * lack of information leakage
+#   * correct prediction horizon assignment (now / 6h / 12h / 24h / 48h)
+#   * physical interpretability / data sanity
+
+# These checks will be implemented in the next module:
+#   04_temporal_validation.py (new file)
+
+# In that script we will:
+#   1. Ensure features come strictly BEFORE flare occurrence
+#   2. Verify matching window logic and shift alignment
+#   3. Validate flare horizon labels:
+#          T_REC_DATETIME < peak_datetime <= T_REC + horizon
+#   4. Detect and report invalid, duplicated, or conflicting matches
+
+# Only after confirming temporal integrity,
+# final training dataset will be generated in:
+#   data/processed/final_training_set.csv
+# ==========================================================

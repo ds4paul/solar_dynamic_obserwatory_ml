@@ -83,3 +83,8 @@ project/
     ├── data_description.md # Full dataset and feature documentation
     └── model_notes.md # Notes, observations, and experiment logs
 
+Feature selection and dataset merging were performed based on domain-relevant publications
+(Bobra & Couvidat 2015; Nishizuka et al. 2018; Park et al. 2020) and supported by
+interactive reasoning and code-generation assistance using ChatGPT (OpenAI) in a
+co-pilot role. The final decisions regarding selected features, preprocessing
+and merging logic were manually evaluated and validated by the author.

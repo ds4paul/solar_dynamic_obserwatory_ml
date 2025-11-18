@@ -229,3 +229,8 @@ while all other variables including:
 are removed due to **lack of predictive value**  
 and **high data leakage risk**.
 
+Feature selection and dataset merging were performed based on domain-relevant publications
+(Bobra & Couvidat 2015; Nishizuka et al. 2018; Park et al. 2020) and supported by
+interactive reasoning and code-generation assistance using ChatGPT (OpenAI) in a
+co-pilot role. The final decisions regarding selected features, preprocessing
+and merging logic were manually evaluated and validated by the author.

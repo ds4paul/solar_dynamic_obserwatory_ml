@@ -216,3 +216,9 @@ natomiast wszystkie cechy:
 - cały plik `nlfff_archive.csv`  
 
 są usuwane ze względu na **brak wartości predykcyjnej** oraz **ryzyko data leakage**.
+
+Proces wyboru cech oraz łączenia tabel został przeprowadzony na podstawie literatury
+(Bobra & Couvidat 2015; Nishizuka et al. 2018; Park et al. 2020) oraz wspierany
+asystą narzędziową ChatGPT (OpenAI) w roli co-pilota.
+Ostateczne decyzje dotyczące wyboru cech, przetwarzania danych oraz logiki łączenia
+zostały dokonane samodzielnie i poddane ręcznej weryfikacji.
