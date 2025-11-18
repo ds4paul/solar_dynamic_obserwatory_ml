@@ -13,7 +13,6 @@ def load_csv_files():
     df_info = pd.read_csv(CSV_INFO)
     return df_raw, df_label, df_info
 
-
 if __name__ == "__main__":
     df_raw, df_label, df_info = load_csv_files()
 

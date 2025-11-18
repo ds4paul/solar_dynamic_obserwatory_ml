@@ -57,6 +57,5 @@ def select_features():
 
     return df_selected
 
-
 if __name__ == "__main__":
     select_features()
