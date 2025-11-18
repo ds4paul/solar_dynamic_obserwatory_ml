@@ -1,31 +1,38 @@
-from pathlib import Path
+"""
+00_download_data.py
+Download raw data from Google Drive into /data/raw directory.
+
+Large raw files should NOT be committed to GitHub until preprocessing
+reduces file size to meet GitHub limits (<100 MB).
+"""
+
 import gdown
+from config import RAW_DIR
 
-# Setup project directories
+# Google Drive file ID
 
-BASE_DIR = Path(__file__).resolve().parents[1]
-RAW_DIR = BASE_DIR / "data" / "raw"
-RAW_DIR.mkdir(parents=True, exist_ok=True)
-
-# File name and Google Drive IDs
-
-files = {
+FILES = {
     "flare_info.csv": "1LU4Js4fyA0Hl1fmAKjH7rSDzpfxD90r1",
     "nlfff_flare_label.csv": "1MRRVrNkP0UIONW9aGk1LUoeN2OcxlCKG",
     "nlfff_raw.csv": "19uYRjL3k-hy6aIV4g4QsHVcwyvcDyx0-",
 }
 
-# Downloads raw CSV files from Google Drive
+def download_raw_files():
+    """Download all raw csv datasets."""
+    RAW_DIR.mkdir(parents=True, exist_ok=True)
 
-for filename, file_id in files.items():
-    url = f"https://drive.google.com/uc?id={file_id}"
-    output_path = RAW_DIR / filename
-    print(f"[INFO] Downloading {filename} -> {output_path}")
-    gdown.download(url, str(output_path), quiet=False)
+    for filename, file_id in FILES.items():
+        url = f"https://drive.google.com/uc?id={file_id}"
+        output_path = RAW_DIR / filename
+        print(f"Downloading {filename} to {output_path}")
+        gdown.download(url, str(output_path), quiet=False)
 
-print("\n[OK] All raw data files downloaded successfully.")
+    print("Download complete.")
 
-# The downloaded files are large, so it's better not to commit them to GitHub right now.
-# It's best to do it only after removing unnecessary data,
-# because GitHub warns that the file exceeds 100 MB and after committing it
-# I won't be able to push the changes.
+if __name__ == "__main__":
+    download_raw_files()
+
+    print(
+        "\n[WARNING] Raw files are large. Do NOT commit them to GitHub until "
+        "unnecessary columns are removed to stay under size limits."
+    )

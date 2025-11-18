@@ -29,32 +29,57 @@ Full dataset documentation can be found in:
 `docs/data_description.md`
 
 ---
+## Important note on raw dataset exploration
 
+The raw dataset (`nlfff_raw.csv`) contains 276 columns, including metadata, 
+processing flags, geometric information and pipeline diagnostic values. 
+Based on findings from space weather research (Bobra & Couvidat 2015; 
+Nishizuka et al. 2018; Park et al. 2020), only physically meaningful 
+magnetic SHARP features are relevant for solar flare prediction.
+
+Therefore:
+- We do NOT perform `.head()` / `.info()` / `.describe()` on the full raw dataset
+- We first remove non-physical and non-causal features based on domain knowledge
+- EDA is performed only on the **reduced**, scientifically relevant feature set
+
+---
+
+## Note on large data files !!!
+
+The downloaded raw dataset files are very large (some exceed 100 MB).  
+Do **not** commit them to GitHub at this stage.  
+They will be added only after preprocessing and removing unnecessary columns  
+to keep the repository lightweight and compatible with GitHub’s file size limits.
+
+---
 ## Repository Structure
 
 ```text
 project/
 │
 ├── data/
-│   ├── raw/            # original .csv files / SQL export
-│   ├── interim/        # partially processed data
-│   └── processed/      # data prepared for modeling
+│ ├── raw/ # Original downloaded CSV files (not committed to GitHub)
+│ ├── interim/ # Cleaned & partially transformed datasets (temporary stage)
+│ └── processed/ # Final modeling-ready datasets (features + target)
 │
 ├── src/
-│   ├── 01_load_data.py
-│   ├── 02_preprocessing.py
-│   ├── 03_feature_engineering.py
-│   ├── 04_model_training.py
-│   ├── 05_hyperparameter_tuning_optuna.py
-│   └── 06_evaluation_and_interpretation.py
+│ ├── config.py # Central configuration (paths, globals)
+│ ├── 00_download_data.py # Downloading raw data from Google Drive
+│ ├── 01_load_data.py # Loading CSV files into DataFrames
+│ ├── 02_select_features.py # Selecting physical & causal SHARP feature set
+│ ├── 03_feature_engineering.py # Encoding, scaling, transformations
+│ ├── 04_model_training.py # Baseline & final model training
+│ ├── 05_optuna_tuning.py # Hyperparameter optimization using Optuna
+│ ├── 06_evaluation.py # Evaluation metrics, reports & visualizations
+│ │
+│ └── utils/ # Helper module with reusable functions
+│   ├── plotting.py # Visualization utilities (EDA, metrics, SHAP)
+│   ├── dimensionality.py # PCA, t-SNE, feature reduction tools
+│   ├── model_helpers.py # Model registry, pipelines, wrappers
+│   ├── explainability.py # SHAP, feature importance, PDP/ICE plots
+│   └── metrics.py # Custom evaluation metrics
 │
 └── docs/
-    ├── data_description.md
-    └── model_notes.md
+    ├── data_description.md # Full dataset and feature documentation
+    └── model_notes.md # Notes, observations, and experiment logs
 
-### Note on large data files !!!
-
-The downloaded raw dataset files are very large (some exceed 100 MB).  
-Do **not** commit them to GitHub at this stage.  
-They will be added only after preprocessing and removing unnecessary columns  
-to keep the repository lightweight and compatible with GitHub’s file size limits.

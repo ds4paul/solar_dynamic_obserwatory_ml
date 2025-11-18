@@ -19,6 +19,17 @@ Etap IV — Interpretation
 ✔ ranking featureów
 Etap V — Final report & conclusions
 
+_____
+Data leakage (po polsku: wyciek informacji) to sytuacja, w której model uczenia maszynowego otrzymuje
+informacje, których nie powinien znać w momencie podejmowania decyzji, czyli takie, które w prawdziwym
+świecie byłyby dostępne dopiero w przyszłości, po zdarzeniu albo wynikają bezpośrednio z targetu.
+W efekcie model uczy się na nienaturalnych danych, osiąga sztucznie wysokie wyniki, ale kompletnie nie
+działa na nowych danych — zawodzi w predykcji operacyjnej.
+
+Model nie może uczyć się ze skutku, aby przewidzieć przyczynę — ma korzystać wyłącznie z danych dostępnych
+przed momentem prognozy.
+_____
+
 
 
 moje środowisko ml_env:
