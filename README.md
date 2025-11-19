@@ -62,7 +62,7 @@ project/
 │ ├── interim/ # Cleaned & partially transformed datasets (temporary stage)
 │ └── processed/ # Final modeling-ready datasets (features + target)
 │
-├── src/
+├── src/ AKTUALIZOWANY W TRAKCIE PISANIA PROJEKTU !!!
 │ ├── config.py # Central configuration (paths, globals)
 │ ├── 00_download_data.py # Downloading raw data from Google Drive
 │ ├── 01_load_data.py # Loading CSV files into DataFrames

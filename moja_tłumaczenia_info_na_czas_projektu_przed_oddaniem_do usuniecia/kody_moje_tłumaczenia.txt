@@ -1,0 +1,37 @@
+# Setup project directories
+
+BASE_DIR = Path(__file__).resolve().parents[1]
+RAW_DIR = BASE_DIR / "data" / "raw"
+RAW_DIR.mkdir(parents=True, exist_ok=True)
+
+BASE_DIR = Path(__file__).resolve().parents[1]
+
+→ Ustal główny katalog projektu automatycznie, niezależnie od miejsca uruchomienia skryptu.
+   - __file__ oznacza ścieżkę do aktualnie wykonywanego pliku .py
+   - resolve() przekształca ją w pełną (absolutną) ścieżkę
+   - parents[1] przechodzi dwa katalogi wyżej, dzięki czemu trafiamy do folderu głównego projektu
+
+RAW_DIR = BASE_DIR / "data" / "raw"
+
+→ Utwórz obiekt ścieżki do folderu data/raw w projekcie.
+   - operator "/" w pathlib automatycznie i poprawnie łączy ścieżki
+
+RAW_DIR.mkdir(parents=True, exist_ok=True)
+
+→ Utwórz folder data/raw, jeśli jeszcze nie istnieje.
+   - parents=True tworzy również katalogi nadrzędne, jeśli są potrzebne
+   - exist_ok=True zapobiega błędowi, jeśli katalog już istnieje
+
+   __________
+
+import os importuje moduł systemowy os z biblioteki standardowej Pythona.
+
+Dzięki temu uzyskujesz dostęp do funkcji, które pozwalają:
+pracować z plikami i folderami (np. os.remove(), os.listdir())
+sprawdzać, czy pliki istnieją (os.path.exists)
+pobierać lub zmieniać aktualny katalog (os.getcwd(), os.chdir())
+pobierać zmienne środowiskowe (os.environ)
+tworzyć lub usuwać katalogi (os.mkdir, os.rmdir)
+wykonywać polecenia systemowe (os.system())
+
+

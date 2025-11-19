@@ -16,7 +16,6 @@ Important notes:
 """
 
 import pandas as pd
-from pathlib import Path
 from src.config import INTERIM_DIR, CSV_LABEL, CSV_INFO
 
 # Load selected SHARP features (input X)
@@ -47,7 +46,7 @@ df_label = df_label.rename(columns={
     "t_rec_datetime": "T_REC_DATETIME"
 })
 
-print("\n[INFO] Merge key column names normalized.")
+print("\nMerge key column names normalized.")
 
 # 2 MERGE FEATURES (X) WITH LABELS (y)
 
@@ -124,4 +123,4 @@ print("[NOTE] This output is TEMPORARY — final dataset will be validated and c
 # Only after confirming temporal integrity,
 # final training dataset will be generated in:
 #   data/processed/final_training_set.csv
-# ==========================================================
+

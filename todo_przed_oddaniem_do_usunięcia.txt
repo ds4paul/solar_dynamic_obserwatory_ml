@@ -32,7 +32,7 @@ _____
 
 
 
-moje środowisko ml_env:
+moje środowisko ml_env, rozbudowywane podczas projektu:
 python 3.12.8
 pandas
 numpy
