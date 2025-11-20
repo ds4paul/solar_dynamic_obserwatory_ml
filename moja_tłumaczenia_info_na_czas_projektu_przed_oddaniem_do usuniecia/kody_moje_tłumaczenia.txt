@@ -26,7 +26,7 @@ RAW_DIR.mkdir(parents=True, exist_ok=True)
 
 import os importuje moduł systemowy os z biblioteki standardowej Pythona.
 
-Dzięki temu uzyskujesz dostęp do funkcji, które pozwalają:
+Dzięki temu uzyskuje dostęp do funkcji, które pozwalają:
 pracować z plikami i folderami (np. os.remove(), os.listdir())
 sprawdzać, czy pliki istnieją (os.path.exists)
 pobierać lub zmieniać aktualny katalog (os.getcwd(), os.chdir())

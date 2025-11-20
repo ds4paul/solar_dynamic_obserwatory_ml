@@ -1,6 +1,6 @@
 # Interpretacja wyników Missing Values (po kroku 05)
 
-Otrzymałeś wynik:
+Otrzymałem wynik:
 
 - GWILL = 100% braków  
 - większość kolumn GOES (xray_intensity, xray_class, peak_datetime itd.) = 64.8% braków  
@@ -56,15 +56,15 @@ Minimalne braki (<0.02%) można:
 
 ---
 
-# 2. Co z tym robimy w projekcie?
+# 2. Co z tym robię w projekcie?
 
-## ✔ KROK 1 – usuwamy całkowicie kolumny bezużyteczne
+## ✔ KROK 1 – usuwam całkowicie kolumny bezużyteczne
 - `GWILL`
 - `noaa_ar`
 - `source` (jeśli niepotrzebne)
 - latitude / longitude (opcjonalnie)
 
-## ✔ KROK 2 – decydujemy o regresji i klasyfikacji
+## ✔ KROK 2 – decydujem o regresji i klasyfikacji
 
 ### **A) Klasyfikacja (y from nlfff_flare_label.csv)**
 Brak GOES **nie wpływa** na klasyfikację.

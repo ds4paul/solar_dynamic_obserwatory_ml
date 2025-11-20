@@ -3,7 +3,7 @@
 
 # Wyniki walidacji czasowej (04_temporal_validation.py) – interpretacja
 
-Otrzymałeś następujący wynik:
+Otrzymałem następujące wyniki:
 
 - **total_rows:** 46 134  
 - **valid_rows:** 16 067  
@@ -43,7 +43,7 @@ To **nie jest błąd** — to odzwierciedlenie rzeczywistej fizyki i obserwacji.
 
 # 2. Dlaczego wszystkie horyzonty (6h/12h/24h/48h) mają tę samą wartość?
 
-Bo w Twoim dataset:
+Bo w dataset:
 
 - rekord jest „prawidłowy” **jeśli pasuje do jakiegokolwiek horyzontu**,  
 - a ponieważ sprawdzamy tylko `valid_window ≤ hours`,  
@@ -52,7 +52,7 @@ Bo w Twoim dataset:
 Dlatego:
 
 - `valid_6h == valid_12h == valid_24h == valid_48h`  
-- to oznacza, że Twoje dopasowania flar miały **delta_hours < 6**  
+- to oznacza, że dopasowania flar miały **delta_hours < 6**  
   (prawdopodobnie większość dopasowanych flar jest bardzo blisko czasowo)
 
 To jest dobre zjawisko — oznacza to, że merge_asof z tolerancją 2h łapie flary
